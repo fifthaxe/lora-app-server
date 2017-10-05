@@ -3,28 +3,28 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "Liv7AJyNinmP3pvwohcXp4R6xY4=",
-			"path": "github.com/sirupsen/logrus",
-			"revision": "85b1699d505667d13f8ac4478c1debbf85d6c5de",
-			"revisionTime": "2017-06-08T22:14:41Z"
-		},
-		{
 			"checksumSHA1": "Ryq0g4AdQjl2ciXvbpHue7J4ZS4=",
 			"path": "github.com/brocaar/loraserver/api/as",
 			"revision": "1d605e3a5d305fe089e0737778dc78bc5fcb7b7b",
 			"revisionTime": "2017-06-02T09:33:00Z"
 		},
 		{
-			"checksumSHA1": "RPPpMs0zGugULKebah2lTzQw04Q=",
+			"checksumSHA1": "0/m2aIZvhmBLFeSAWln9jeLdNi0=",
 			"path": "github.com/brocaar/loraserver/api/ns",
-			"revision": "d7c3a90e97ca16be244ba467b445e805e85c7f99",
-			"revisionTime": "2017-07-25T08:21:29Z"
+			"revision": "cce58e44524b8ab037208f8021784216ebb2346c",
+			"revisionTime": "2017-09-27T11:18:37Z"
 		},
 		{
 			"checksumSHA1": "u52BzfoKG0x7CgBgg/PB1AEVSag=",
 			"path": "github.com/brocaar/lorawan",
 			"revision": "909df3392c6ae1acc73b075640d7dce3cdf4305d",
 			"revisionTime": "2017-05-24T09:31:27Z"
+		},
+		{
+			"checksumSHA1": "XfgENnc24v4hkH4fveDJSI07zOQ=",
+			"path": "github.com/brocaar/lorawan/backend",
+			"revision": "7dd606faf87874f48913503604d0f5836ba253db",
+			"revisionTime": "2017-09-05T08:15:54Z"
 		},
 		{
 			"checksumSHA1": "GXOurDGgsLmJs0wounpdWZZRSGw=",
@@ -175,6 +175,18 @@
 			"path": "github.com/rubenv/sql-migrate/sqlparse",
 			"revision": "f64b6080c334adaf843209164107439e92bb170b",
 			"revisionTime": "2017-02-07T10:19:24Z"
+		},
+		{
+			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "5bf94b69c6b68ee1b541973bb8e1144db23a194b",
+			"revisionTime": "2017-03-21T23:07:31Z"
+		},
+		{
+			"checksumSHA1": "Liv7AJyNinmP3pvwohcXp4R6xY4=",
+			"path": "github.com/sirupsen/logrus",
+			"revision": "85b1699d505667d13f8ac4478c1debbf85d6c5de",
+			"revisionTime": "2017-06-08T22:14:41Z"
 		},
 		{
 			"checksumSHA1": "AikWjAOvWHSJ8G1iU+wNReZnyCk=",

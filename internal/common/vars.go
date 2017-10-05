@@ -18,3 +18,6 @@ var NetworkServer ns.NetworkServerClient
 
 // Handler holds the handler of events.
 var Handler handler.Handler
+
+// ApplicationServerID holds the application-server ID (UUID).
+var ApplicationServerID string
