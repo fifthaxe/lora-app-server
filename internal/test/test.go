@@ -148,6 +148,9 @@ type NetworkServerClient struct {
 	SendDownlinkDataChan     chan ns.SendDownlinkDataRequest
 	SendDownlinkDataResponse ns.SendDownlinkDataResponse
 
+	SendProprietaryPayloadChan     chan ns.SendProprietaryPayloadRequest
+	SendProprietaryPayloadResponse ns.SendProprietaryPayloadResponse
+
 	CreateGatewayChan     chan ns.CreateGatewayRequest
 	CreateGatewayResponse ns.CreateGatewayResponse
 
@@ -225,6 +228,7 @@ func NewNetworkServerClient() *NetworkServerClient {
 		GetRandomDevAddrChan:                          make(chan ns.GetRandomDevAddrRequest, 100),
 		EnqueueDownlinkMACCommandChan:                 make(chan ns.EnqueueDownlinkMACCommandRequest, 100),
 		SendDownlinkDataChan:                          make(chan ns.SendDownlinkDataRequest, 100),
+		SendProprietaryPayloadChan:                    make(chan ns.SendProprietaryPayloadRequest, 100),
 		CreateGatewayChan:                             make(chan ns.CreateGatewayRequest, 100),
 		GetGatewayChan:                                make(chan ns.GetGatewayRequest, 100),
 		UpdateGatewayChan:                             make(chan ns.UpdateGatewayRequest, 100),
@@ -417,6 +421,12 @@ func (n *NetworkServerClient) EnqueueDownlinkMACCommand(ctx context.Context, in 
 func (n *NetworkServerClient) SendDownlinkData(ctx context.Context, in *ns.SendDownlinkDataRequest, opts ...grpc.CallOption) (*ns.SendDownlinkDataResponse, error) {
 	n.SendDownlinkDataChan <- *in
 	return &n.SendDownlinkDataResponse, nil
+}
+
+// SendProprietaryPayload method.
+func (n *NetworkServerClient) SendProprietaryPayload(ctx context.Context, in *ns.SendProprietaryPayloadRequest, opts ...grpc.CallOption) (*ns.SendProprietaryPayloadResponse, error) {
+	n.SendProprietaryPayloadChan <- *in
+	return &n.SendProprietaryPayloadResponse, nil
 }
 
 // GetFrameLogsForDevEUI method.
