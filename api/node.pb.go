@@ -15,6 +15,7 @@ It is generated from these files:
 	profiles.proto
 	networkServer.proto
 	serviceProfile.proto
+	deviceProfile.proto
 
 It has these top-level messages:
 	DeviceCredentials
@@ -172,6 +173,17 @@ It has these top-level messages:
 	ListServiceProfileRequest
 	ServiceProfileMeta
 	ListServiceProfileResponse
+	CreateDeviceProfileRequest
+	CreateDeviceProfileResponse
+	GetDeviceProfileRequest
+	GetDeviceProfileResponse
+	UpdateDeviceProfileRequest
+	UpdateDeviceProfileResponse
+	DeleteDeviceProfileRequest
+	DeleteDeviceProfileResponse
+	ListDeviceProfileRequest
+	DeviceProfileMeta
+	ListDeviceProfileResponse
 */
 package api
 
