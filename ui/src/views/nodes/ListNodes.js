@@ -79,7 +79,7 @@ class ListNodes extends Component {
       <div className="panel panel-default">
         <div className={`panel-heading clearfix ${this.state.isAdmin ? '' : 'hidden'}`}>
           <div className="btn-group pull-right">
-            <Link to={`/organizations/${this.props.params.organizationID}/applications/${this.state.application.id}/nodes/create`}><button type="button" className="btn btn-default btn-sm">Create node</button></Link>
+            <Link to={`/organizations/${this.props.params.organizationID}/applications/${this.state.application.id}/nodes/create`}><button type="button" className="btn btn-default btn-sm">Create device</button></Link>
           </div>
         </div>
         <div className="panel-body">
