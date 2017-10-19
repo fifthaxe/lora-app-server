@@ -161,6 +161,9 @@ message CreateGatewayRequest {
 
 	// ID of the channel-configuration.
 	int64 channelConfigurationID = 8;
+
+	// ID of the network-server to which the gateway is connected.
+	int64 networkServerID = 9;
 }
 
 message CreateGatewayResponse {}
@@ -206,6 +209,9 @@ message GetGatewayResponse {
 
 	// ID of the channel-configuration.
 	int64 channelConfigurationID = 12;
+
+	// ID of the network-server to which the gateway is connected.
+	int64 networkServerID = 13;
 };
 
 message DeleteGatewayRequest {
@@ -255,6 +261,9 @@ message ListGatewayItem {
 
 	// ID of the organization to which this gateway belongs.
 	int64 organizationID = 6;
+
+	// ID of the network-server to which the gateway is connected.
+	int64 networkServerID = 7;
 }
 
 message ListGatewayResponse {

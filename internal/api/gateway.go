@@ -36,6 +36,12 @@ func (a *GatewayAPI) Create(ctx context.Context, req *pb.CreateGatewayRequest) (
 		return nil, grpc.Errorf(codes.Unauthenticated, "authentication failed: %s", err)
 	}
 
+	// also validate that the network-server is accessible for the given organization
+	err = a.validator.Validate(ctx, auth.ValidateOrganizationNetworkServerAccess(auth.Read, req.OrganizationID, req.NetworkServerID))
+	if err != nil {
+		return nil, grpc.Errorf(codes.Unauthenticated, "authentication failed: %s", err)
+	}
+
 	var mac lorawan.EUI64
 	if err := mac.UnmarshalText([]byte(req.Mac)); err != nil {
 		return nil, grpc.Errorf(codes.InvalidArgument, "bad gateway mac: %s", err)
@@ -53,10 +59,11 @@ func (a *GatewayAPI) Create(ctx context.Context, req *pb.CreateGatewayRequest) (
 
 	err = storage.Transaction(common.DB, func(tx *sqlx.Tx) error {
 		err = storage.CreateGateway(tx, &storage.Gateway{
-			MAC:            mac,
-			Name:           req.Name,
-			Description:    req.Description,
-			OrganizationID: req.OrganizationID,
+			MAC:             mac,
+			Name:            req.Name,
+			Description:     req.Description,
+			OrganizationID:  req.OrganizationID,
+			NetworkServerID: req.NetworkServerID,
 		})
 		if err != nil {
 			return errToRPCError(err)
@@ -113,6 +120,7 @@ func (a *GatewayAPI) Get(ctx context.Context, req *pb.GetGatewayRequest) (*pb.Ge
 		FirstSeenAt:            getResp.FirstSeenAt,
 		LastSeenAt:             getResp.LastSeenAt,
 		ChannelConfigurationID: getResp.ChannelConfigurationID,
+		NetworkServerID:        gw.NetworkServerID,
 	}
 	return ret, err
 }
@@ -173,12 +181,13 @@ func (a *GatewayAPI) List(ctx context.Context, req *pb.ListGatewayRequest) (*pb.
 	result := make([]*pb.ListGatewayItem, 0, len(gws))
 	for i := range gws {
 		result = append(result, &pb.ListGatewayItem{
-			Mac:            gws[i].MAC.String(),
-			Name:           gws[i].Name,
-			Description:    gws[i].Description,
-			CreatedAt:      gws[i].CreatedAt.Format(time.RFC3339Nano),
-			UpdatedAt:      gws[i].UpdatedAt.Format(time.RFC3339Nano),
-			OrganizationID: gws[i].OrganizationID,
+			Mac:             gws[i].MAC.String(),
+			Name:            gws[i].Name,
+			Description:     gws[i].Description,
+			CreatedAt:       gws[i].CreatedAt.Format(time.RFC3339Nano),
+			UpdatedAt:       gws[i].UpdatedAt.Format(time.RFC3339Nano),
+			OrganizationID:  gws[i].OrganizationID,
+			NetworkServerID: gws[i].NetworkServerID,
 		})
 	}
 
