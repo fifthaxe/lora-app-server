@@ -95,6 +95,16 @@
             }
           }
         },
+        "parameters": [
+          {
+            "name": "networkServerID",
+            "description": "Network-server id.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
         "tags": [
           "Gateway"
         ]
@@ -142,6 +152,14 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "networkServerID",
+            "description": "Network-server id.",
+            "in": "query",
+            "required": false,
             "type": "string",
             "format": "int64"
           }
@@ -224,6 +242,14 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "networkServerID",
+            "description": "Network-server id.",
+            "in": "query",
+            "required": false,
             "type": "string",
             "format": "int64"
           }
@@ -484,6 +510,11 @@
             "format": "int32"
           },
           "description": "Channels active in this configuration. These channel indices must map\nto the channel numbers as specified in the LoRaWAN Regional Parameters."
+        },
+        "networkServerID": {
+          "type": "string",
+          "format": "int64",
+          "description": "Network-server id."
         }
       }
     },
@@ -531,6 +562,11 @@
             "format": "int32"
           },
           "description": "Spread-factors (in case of LoRa modulation)."
+        },
+        "networkServerID": {
+          "type": "string",
+          "format": "int64",
+          "description": "Network-server id."
         }
       }
     },
@@ -668,6 +704,11 @@
         "updatedAt": {
           "type": "string",
           "description": "The timestamp when the channel-configuration was last updated."
+        },
+        "networkServerID": {
+          "type": "string",
+          "format": "int64",
+          "description": "Network-server id."
         }
       }
     },
@@ -899,6 +940,11 @@
             "format": "int32"
           },
           "description": "Channels active in this configuration. These channel indices must map\nto the channel numbers as specified in the LoRaWAN Regional Parameters."
+        },
+        "networkServerID": {
+          "type": "string",
+          "format": "int64",
+          "description": "Network-server id."
         }
       }
     },
@@ -944,6 +990,11 @@
             "format": "int32"
           },
           "description": "Spread-factors (in case of LoRa modulation)."
+        },
+        "networkServerID": {
+          "type": "string",
+          "format": "int64",
+          "description": "Network-server id."
         }
       }
     },

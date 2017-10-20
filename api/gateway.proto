@@ -346,6 +346,9 @@ message CreateChannelConfigurationRequest {
 	// Channels active in this configuration. These channel indices must map
 	// to the channel numbers as specified in the LoRaWAN Regional Parameters.
 	repeated int32 channels = 2;
+
+	// Network-server id.
+	int64 networkServerID = 3;
 }
 
 message CreateChannelConfigurationResponse {
@@ -356,6 +359,9 @@ message CreateChannelConfigurationResponse {
 message GetChannelConfigurationRequest {
 	// ID of the channel-configuration.
 	int64 id = 1;
+
+	// Network-server id.
+	int64 networkServerID = 2;
 }
 
 message GetChannelConfigurationResponse {
@@ -374,6 +380,9 @@ message GetChannelConfigurationResponse {
 
 	// The timestamp when the channel-configuration was last updated.
 	string updatedAt = 5;
+
+	// Network-server id.
+	int64 networkServerID = 6;
 }
 
 message UpdateChannelConfigurationRequest {
@@ -386,6 +395,9 @@ message UpdateChannelConfigurationRequest {
 	// Channels active in this configuration. These channel indices must map
 	// to the channel numbers as specified in the LoRaWAN Regional Parameters.
 	repeated int32 channels = 3;
+
+	// Network-server id.
+	int64 networkServerID = 4;
 }
 
 message UpdateChannelConfigurationResponse {}
@@ -393,11 +405,17 @@ message UpdateChannelConfigurationResponse {}
 message DeleteChannelConfigurationRequest {
 	// ID of the channel-configuration.
 	int64 id = 1;
+
+	// Network-server id.
+	int64 networkServerID = 2;
 }
 
 message DeleteChannelConfigurationResponse {}
 
-message ListChannelConfigurationsRequest {}
+message ListChannelConfigurationsRequest {
+	// Network-server id.
+	int64 networkServerID = 1;
+}
 
 message ListChannelConfigurationsResponse {
 	// Result-set.
@@ -422,6 +440,9 @@ message CreateExtraChannelRequest {
 
 	// Spread-factors (in case of LoRa modulation).
 	repeated int32 spreadFactors = 6;
+
+	// Network-server id.
+	int64 networkServerID = 7;
 }
 
 message CreateExtraChannelResponse {
@@ -450,6 +471,9 @@ message UpdateExtraChannelRequest {
 
 	// Spread-factors (in case of LoRa modulation).
 	repeated int32 spreadFactors = 7;
+
+	// Network-server id.
+	int64 networkServerID = 8;
 }
 
 message UpdateExtraChannelResponse {}
@@ -457,6 +481,9 @@ message UpdateExtraChannelResponse {}
 message DeleteExtraChannelRequest {
 	// ID of the extra channel.
 	int64 id = 1;
+
+	// Network-server id.
+	int64 networkServerID = 2;
 }
 
 message DeleteExtraChannelResponse {}
@@ -493,6 +520,9 @@ message GetExtraChannelResponse {
 message GetExtraChannelsForChannelConfigurationIDRequest {
 	// ID of the channel-configuration.
 	int64 id = 1;
+
+	// Network-server id.
+	int64 networkServerID = 2;
 }
 
 message GetExtraChannelsForChannelConfigurationIDResponse {
