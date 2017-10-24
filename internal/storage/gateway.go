@@ -1,10 +1,16 @@
 package storage
 
 import (
+	"context"
 	"database/sql"
 	"regexp"
 	"time"
 
+	"github.com/brocaar/loraserver/api/ns"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+
+	"github.com/brocaar/lora-app-server/internal/common"
 	"github.com/brocaar/lorawan"
 	"github.com/jmoiron/sqlx"
 	"github.com/pkg/errors"
@@ -115,7 +121,12 @@ func UpdateGateway(db sqlx.Execer, gw *Gateway) error {
 }
 
 // DeleteGateway deletes the gateway matching the given MAC.
-func DeleteGateway(db sqlx.Execer, mac lorawan.EUI64) error {
+func DeleteGateway(db sqlx.Ext, mac lorawan.EUI64) error {
+	n, err := GetNetworkServerForGatewayMAC(db, mac)
+	if err != nil {
+		return errors.Wrap(err, "get network-server error")
+	}
+
 	res, err := db.Exec("delete from gateway where mac = $1", mac[:])
 	if err != nil {
 		return errors.Wrap(err, "delete error")
@@ -127,6 +138,19 @@ func DeleteGateway(db sqlx.Execer, mac lorawan.EUI64) error {
 	if ra == 0 {
 		return ErrDoesNotExist
 	}
+
+	nsClient, err := common.NetworkServerPool.Get(n.Server)
+	if err != nil {
+		return errors.Wrap(err, "get network-server client error")
+	}
+
+	_, err = nsClient.DeleteGateway(context.Background(), &ns.DeleteGatewayRequest{
+		Mac: mac[:],
+	})
+	if err != nil && grpc.Code(err) != codes.NotFound {
+		return errors.Wrap(err, "delete gateway error")
+	}
+
 	log.WithField("mac", mac).Info("gateway deleted")
 	return nil
 }
@@ -256,4 +280,23 @@ func GetGatewaysForUser(db *sqlx.DB, username string, limit, offset int) ([]Gate
 		return nil, errors.Wrap(err, "select error")
 	}
 	return gws, nil
+}
+
+// DeleteAllGatewaysForOrganizationID deletes all gateways for a given
+// organization id.
+func DeleteAllGatewaysForOrganizationID(db sqlx.Ext, organizationID int64) error {
+	var gws []Gateway
+	err := sqlx.Select(db, &gws, "select * from gateway where organization_id = $1", organizationID)
+	if err != nil {
+		return handlePSQLError(Select, err, "select error")
+	}
+
+	for _, gw := range gws {
+		err = DeleteGateway(db, gw.MAC)
+		if err != nil {
+			return errors.Wrap(err, "delete gateway error")
+		}
+	}
+
+	return nil
 }
