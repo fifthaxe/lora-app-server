@@ -78,7 +78,7 @@ func CreateDevice(db sqlx.Ext, d *Device) error {
 		d.Description,
 	)
 	if err != nil {
-		return handlePSQLError(err, "insert error")
+		return handlePSQLError(Insert, err, "insert error")
 	}
 
 	app, err := GetApplication(db, d.ApplicationID)
@@ -121,7 +121,7 @@ func GetDevice(db sqlx.Queryer, devEUI lorawan.EUI64) (Device, error) {
 	var d Device
 	err := sqlx.Get(db, &d, "select * from device where dev_eui = $1", devEUI[:])
 	if err != nil {
-		return d, handlePSQLError(err, "select error")
+		return d, handlePSQLError(Select, err, "select error")
 	}
 
 	return d, nil
@@ -145,7 +145,7 @@ func GetDevicesForApplicationID(db sqlx.Queryer, applicationID int64, limit, off
 		offset,
 	)
 	if err != nil {
-		return nil, handlePSQLError(err, "select error")
+		return nil, handlePSQLError(Select, err, "select error")
 	}
 
 	return devices, nil
@@ -164,7 +164,7 @@ func GetDeviceCountForApplicationID(db sqlx.Queryer, applicationID int64) (int, 
 		applicationID,
 	)
 	if err != nil {
-		return count, handlePSQLError(err, "select error")
+		return count, handlePSQLError(Select, err, "select error")
 	}
 
 	return count, nil
@@ -196,7 +196,7 @@ func UpdateDevice(db sqlx.Ext, d *Device) error {
 		d.Description,
 	)
 	if err != nil {
-		return handlePSQLError(err, "update error")
+		return handlePSQLError(Update, err, "update error")
 	}
 	ra, err := res.RowsAffected()
 	if err != nil {
@@ -250,7 +250,7 @@ func DeleteDevice(db sqlx.Ext, devEUI lorawan.EUI64) error {
 
 	res, err := db.Exec("delete from device where dev_eui = $1", devEUI[:])
 	if err != nil {
-		return handlePSQLError(err, "delete error")
+		return handlePSQLError(Delete, err, "delete error")
 	}
 	ra, err := res.RowsAffected()
 	if err != nil {
@@ -301,7 +301,7 @@ func CreateDeviceKeys(db sqlx.Execer, dc *DeviceKeys) error {
 		dc.JoinNonce,
 	)
 	if err != nil {
-		return handlePSQLError(err, "insert error")
+		return handlePSQLError(Insert, err, "insert error")
 	}
 
 	log.WithFields(log.Fields{
@@ -317,7 +317,7 @@ func GetDeviceKeys(db sqlx.Queryer, devEUI lorawan.EUI64) (DeviceKeys, error) {
 
 	err := sqlx.Get(db, &dc, "select * from device_keys where dev_eui = $1", devEUI[:])
 	if err != nil {
-		return dc, handlePSQLError(err, "select error")
+		return dc, handlePSQLError(Select, err, "select error")
 	}
 
 	return dc, nil
@@ -341,7 +341,7 @@ func UpdateDeviceKeys(db sqlx.Execer, dc *DeviceKeys) error {
 		dc.JoinNonce,
 	)
 	if err != nil {
-		return handlePSQLError(err, "update error")
+		return handlePSQLError(Update, err, "update error")
 	}
 	ra, err := res.RowsAffected()
 	if err != nil {
@@ -362,7 +362,7 @@ func UpdateDeviceKeys(db sqlx.Execer, dc *DeviceKeys) error {
 func DeleteDeviceKeys(db sqlx.Execer, devEUI lorawan.EUI64) error {
 	res, err := db.Exec("delete from device_keys where dev_eui = $1", devEUI[:])
 	if err != nil {
-		return handlePSQLError(err, "delete error")
+		return handlePSQLError(Delete, err, "delete error")
 	}
 	ra, err := res.RowsAffected()
 	if err != nil {
@@ -397,7 +397,7 @@ func CreateDeviceActivation(db sqlx.Queryer, da *DeviceActivation) error {
 		da.NwkSKey[:],
 	)
 	if err != nil {
-		return handlePSQLError(err, "insert error")
+		return handlePSQLError(Insert, err, "insert error")
 	}
 
 	log.WithFields(log.Fields{
@@ -423,7 +423,7 @@ func GetLastDeviceActivationForDevEUI(db sqlx.Queryer, devEUI lorawan.EUI64) (De
 		devEUI[:],
 	)
 	if err != nil {
-		return da, handlePSQLError(err, "select error")
+		return da, handlePSQLError(Select, err, "select error")
 	}
 
 	return da, nil

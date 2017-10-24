@@ -61,7 +61,7 @@ func CreateGateway(db sqlx.Execer, gw *Gateway) error {
 		gw.NetworkServerID,
 	)
 	if err != nil {
-		return handlePSQLError(err, "insert error")
+		return handlePSQLError(Insert, err, "insert error")
 	}
 
 	log.WithFields(log.Fields{
@@ -96,7 +96,7 @@ func UpdateGateway(db sqlx.Execer, gw *Gateway) error {
 		gw.NetworkServerID,
 	)
 	if err != nil {
-		return handlePSQLError(err, "update error")
+		return handlePSQLError(Update, err, "update error")
 	}
 	ra, err := res.RowsAffected()
 	if err != nil {
