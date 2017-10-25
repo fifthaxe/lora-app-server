@@ -427,6 +427,11 @@
           "type": "integer",
           "format": "int64",
           "description": "Downlink frame-counter."
+        },
+        "skipFCntCheck": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Skip frame-counter checks (this is insecure, but could be helpful for debugging)."
         }
       }
     },
@@ -560,6 +565,11 @@
           "type": "integer",
           "format": "int64",
           "description": "Downlink frame-counter."
+        },
+        "skipFCntCheck": {
+          "type": "boolean",
+          "format": "boolean",
+          "description": "Skip frame-counter checks (this is insecure, but could be helpful for debugging)."
         }
       }
     },
