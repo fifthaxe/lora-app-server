@@ -28,6 +28,12 @@ type Device struct {
 	Description     string        `db:"description"`
 }
 
+// DeviceListItem defines the Device as list item.
+type DeviceListItem struct {
+	Device
+	DeviceProfileName string `db:"device_profile_name"`
+}
+
 // Validate validates the device data.
 func (d Device) Validate() error {
 	return nil
@@ -132,12 +138,15 @@ func GetDevice(db sqlx.Queryer, devEUI lorawan.EUI64) (Device, error) {
 
 // GetDevicesForApplicationID returns a slice of devices for the given
 // application id.
-func GetDevicesForApplicationID(db sqlx.Queryer, applicationID int64, limit, offset int) ([]Device, error) {
-	var devices []Device
+func GetDevicesForApplicationID(db sqlx.Queryer, applicationID int64, limit, offset int) ([]DeviceListItem, error) {
+	var devices []DeviceListItem
 	err := sqlx.Select(db, &devices, `
         select
-            *
-        from device
+			d.*,
+			dp.name as device_profile_name
+		from device d
+		inner join device_profile dp
+			on dp.device_profile_id = d.device_profile_id
         where
             application_id = $1
         order by name
